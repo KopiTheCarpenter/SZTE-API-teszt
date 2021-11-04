@@ -7,6 +7,7 @@ const client = require('./client')('localhost', 8000)
  * and a food becomes
  * {'name':'name of the food', 'calories': 10, 'id': 'abcd1234' }
 */
+
 describe('Food tests', () => {
     it('test runner works', () => {
         expect(1).toBe(1)
@@ -15,14 +16,18 @@ describe('Food tests', () => {
     it('Should give error when food is posted without the name attribute.', async () => {
         ///api/food végpontra POSTolt adatból hiányzik a name => 400 válasz
         const postResponse = await client.post('/api/food', {'calories': 10})
-
+        expect(postResponse.code).toBe(400)
+    })
+    
+    it('Should give error when food is posted with negative calories.', async () => {
+        ///api/food végpontra POSTolt adatban negatív a calories => 400 válasz
+        const postResponse = await client.post('/api/food', {'name': 'burger','calories': -10})
         expect(postResponse.code).toBe(400)
     })
 
-    it('Should give error when food is posted with negative calories.', async () => {
+    it('Should give error when food is posted with negative calories without name.', async () => {
         ///api/food végpontra POSTolt adatban negatív a calories => 400 válasz
         const postResponse = await client.post('/api/food', {'calories': -10})
-
         expect(postResponse.code).toBe(400)
     })
 
