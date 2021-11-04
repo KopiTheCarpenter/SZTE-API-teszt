@@ -109,7 +109,7 @@ describe('Food tests', () => {
         expect(deleteResponse.code).toBe(404)
     })
 
-    it ('should give error.', async () => {
+    it ('should give error when the id in URL does not match the attribute in the request body.', async () => {
         ///api/food/\<id\> végpontra küldött PUT esetében amennyiben az url-ben és a bodyban küldött id különbözik akkot 400 hibakódot ad
         let burger = {'name': 'burger', 'calories': 10}
         const postResponse = await client.post('/api/food', burger)
